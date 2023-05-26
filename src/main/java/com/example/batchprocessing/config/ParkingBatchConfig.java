@@ -33,11 +33,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 @EnableBatchProcessing
 @EnableJpaRepositories(basePackages = "com.example.system.repositories")
 @ComponentScan(basePackages = "com.example.system")
-public class BatchConfig {
+public class ParkingBatchConfig {
     @Autowired
     private final ParkingSystemRepo parkingSystemRepo;
     @Autowired
-    public BatchConfig(ParkingSystemRepo parkingSystemRepo) {
+    public ParkingBatchConfig(ParkingSystemRepo parkingSystemRepo) {
         this.parkingSystemRepo = parkingSystemRepo;
     }
 
@@ -48,7 +48,7 @@ public class BatchConfig {
     @Bean
     public FlatFileItemReader<ParkingSystem> reader() {
         FlatFileItemReader<ParkingSystem> reader = new FlatFileItemReader<>();
-        reader.setResource(new FileSystemResource("C:\\Users\\User\\Desktop\\batch\\src\\main\\resources\\Blank-CSV-Template.csv"));
+        reader.setResource(new FileSystemResource("C:\\Users\\User\\IdeaProjects\\ParkingSystemBatchProcessing\\src\\main\\resources\\Blank-CSV-Template.csv"));
         reader.setName("csvReader");
         reader.setLinesToSkip(1);
         reader.setLineMapper(lineMapper());
