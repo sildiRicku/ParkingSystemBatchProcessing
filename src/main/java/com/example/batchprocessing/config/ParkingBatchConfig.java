@@ -19,6 +19,7 @@ import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +35,8 @@ import org.springframework.transaction.PlatformTransactionManager;
 @EnableJpaRepositories(basePackages = "com.example.system.repositories")
 @ComponentScan(basePackages = "com.example.system")
 public class ParkingBatchConfig {
+    @Value("${csv.file.path}")
+    private String csvFilePath;
     @Autowired
     private final ParkingSystemRepo parkingSystemRepo;
     @Autowired
@@ -48,7 +51,7 @@ public class ParkingBatchConfig {
     @Bean
     public FlatFileItemReader<ParkingSystem> reader() {
         FlatFileItemReader<ParkingSystem> reader = new FlatFileItemReader<>();
-        reader.setResource(new FileSystemResource("C:\\Users\\User\\IdeaProjects\\ParkingSystemBatchProcessing\\src\\main\\resources\\Blank-CSV-Template.csv"));
+        reader.setResource(new FileSystemResource(csvFilePath));
         reader.setName("csvReader");
         reader.setLinesToSkip(1);
         reader.setLineMapper(lineMapper());
