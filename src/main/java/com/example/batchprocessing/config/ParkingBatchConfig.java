@@ -1,6 +1,6 @@
 package com.example.batchprocessing.config;
 
-import com.example.system.entities.ParkingSystem;
+import com.example.system.models.ParkingSystem;
 
 import com.example.system.repositories.ParkingSystemRepo;
 
