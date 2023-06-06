@@ -1,5 +1,6 @@
 package com.example.batchprocessing.config;
 
+import com.example.batchprocessing.listener.MyJobListener;
 import com.example.system.models.ParkingSystem;
 
 import com.example.system.repositories.ParkingSystemRepo;
@@ -37,8 +38,10 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class ParkingBatchConfig {
     @Value("${csv.file.path}")
     private String csvFilePath;
-    @Autowired
     private final ParkingSystemRepo parkingSystemRepo;
+    @Autowired
+    private MyJobListener myJobListener;
+
     @Autowired
     public ParkingBatchConfig(ParkingSystemRepo parkingSystemRepo) {
         this.parkingSystemRepo = parkingSystemRepo;
@@ -66,7 +69,7 @@ public class ParkingBatchConfig {
         lineTokenizer.setDelimiter("," +
                 "");
         lineTokenizer.setStrict(false);
-        lineTokenizer.setNames("systemId", "address", "firmwareVersion", "firstInstallDate", "identifier", "lastUpdate","totalMoney", "workingStatus");
+        lineTokenizer.setNames("systemId", "address", "firmwareVersion", "firstInstallDate", "identifier", "lastUpdate", "totalMoney", "workingStatus");
 
         BeanWrapperFieldSetMapper<ParkingSystem> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
         fieldSetMapper.setTargetType(ParkingSystem.class);
@@ -88,6 +91,7 @@ public class ParkingBatchConfig {
         writer.setMethodName("save");
         return writer;
     }
+
     @Bean
     public Step step1(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
         return new StepBuilder("csv-step", jobRepository).
@@ -100,11 +104,13 @@ public class ParkingBatchConfig {
     }
 
     @Bean
-    public Job runJob(JobRepository  jobRepository, PlatformTransactionManager transactionManager) {
+    public Job runJob(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
         return new JobBuilder("Parkingsystems", jobRepository)
+                .listener(myJobListener)
                 .flow(step1(jobRepository, transactionManager)).end().build();
 
     }
+
     @Bean
     public TaskExecutor taskExecutor() {
         SimpleAsyncTaskExecutor asyncTaskExecutor = new SimpleAsyncTaskExecutor();
