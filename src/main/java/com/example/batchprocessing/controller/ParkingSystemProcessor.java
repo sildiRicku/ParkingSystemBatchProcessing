@@ -1,6 +1,6 @@
 package com.example.batchprocessing.controller;
 
-import com.example.system.entities.Holiday;
+import com.example.system.models.Holiday;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
