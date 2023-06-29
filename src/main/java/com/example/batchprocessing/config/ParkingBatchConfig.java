@@ -47,10 +47,6 @@ public class ParkingBatchConfig {
         this.parkingSystemRepo = parkingSystemRepo;
     }
 
-    //    @Bean
-//    public ParkingSystemRepo parkingSystemRepo() {
-//        return new ParkingSystemRepoImpl();  // Instantiate the repository bean
-//    }
     @Bean
     public FlatFileItemReader<ParkingSystem> reader() {
         FlatFileItemReader<ParkingSystem> reader = new FlatFileItemReader<>();

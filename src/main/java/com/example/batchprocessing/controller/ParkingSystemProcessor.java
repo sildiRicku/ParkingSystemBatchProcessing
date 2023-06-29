@@ -1,6 +1,5 @@
 package com.example.batchprocessing.controller;
 
-import com.example.system.models.Holiday;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersBuilder;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/batch")
 public class ParkingSystemProcessor {
-    private Holiday holiday;
     @Autowired
     private Job job;
     @Autowired

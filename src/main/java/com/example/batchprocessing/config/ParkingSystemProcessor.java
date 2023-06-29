@@ -7,8 +7,6 @@ public class ParkingSystemProcessor implements ItemProcessor<ParkingSystem, Park
 
     @Override
     public ParkingSystem process(ParkingSystem parkingSystem) {
-     {
-            return parkingSystem;
-        }
+     {return parkingSystem;}
     }
 }
